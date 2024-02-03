@@ -1,0 +1,238 @@
+SlipperyDistShift-v0:
+  parameters:
+    n_steps: 128 # batch size is n_steps * n_env
+    batch_size: 128 # Number of training minibatches per update
+    gae_lambda: 0.95 #  Factor for trade-off of bias vs variance for Generalized Advantage Estimator
+    gamma: 0.9
+    n_epochs: 6 #  Number of epoch when optimizing the surrogate
+    ent_coef: 0.09 # Entropy coefficient for the loss caculation
+    learning_rate: 0.0003 # The learning rate, it can be a function
+    clip_range: 0.2 # Clipping parameter, it can be a function
+    max_grad_norm: 0.5
+    vf_coef: 0.7
+    cm_w: 0
+    target_kl: 0.01
+    model_steps: 32
+    model_grad_steps: 8
+    clip_likelihood: 5
+    simplify_obs: None
+    vf_compl_coef: 7.753504240710123
+    model_buffer_size: 5000000
+    complexity_learning_rate: 0.954487235781629
+    pre_train_steps: 500
+    delay_update: 4807
+    norm_parameter: 1.0
+    unnormalize_model: True
+    model_kwargs: {lr: lin_0.001, model_arch: [64,32,64]}
+  environment:
+    n_envs: 1
+    name: SlipperyDistShift-v0
+    render_mode: rgb_array
+    normalize: True
+
+
+DynamicObstaclesSwitch-8x8-v0:
+  parameters:
+    n_steps: 256 # batch size is n_steps * n_env
+    batch_size: 128 # Number of training minibatches per update
+    gae_lambda: 0.95 #  Factor for trade-off of bias vs variance for Generalized Advantage Estimator
+    gamma: 0.98236
+    n_epochs: 4 #  Number of epoch when optimizing the surrogate
+    ent_coef: 0.133626 # Entropy coefficient for the loss caculation
+    learning_rate: 0.0015475 # The learning rate, it can be a function
+    clip_range: 0.2 # Clipping parameter, it can be a function
+    max_grad_norm: 0.5
+    model_steps: 32
+    clip_likelihood: 0.05
+    model_grad_steps: 8
+    model_buffer_size: 5000000
+    cm_w: 0.030
+    vf_coef: 0.22465
+    vf_compl_coef: 6
+    target_kl: 0.01
+    complexity_learning_rate: 0.51177596
+    delay_update: 2000
+    unnormalize_model: True
+    pre_train_steps: 500
+    norm_parameter: 1
+    model_kwargs: {lr: lin_0.001, model_arch: [64,64,64]}
+  environment:
+    n_envs: 1
+    name: DynamicObstaclesSwitch-8x8-v0
+    render_mode: rgb_array
+    normalize: True
+
+highway-fast-v0:
+  parameters:
+    n_steps: 128 # batch size is n_steps * n_env
+    batch_size: 64 # Number of training minibatches per update
+    gae_lambda: 0.95 #  Factor for trade-off of bias vs variance for Generalized Advantage Estimator
+    gamma: 0.8
+    n_epochs: 10 #  Number of epoch when optimizing the surrogate
+    ent_coef: 0.01 # Entropy coefficient for the loss caculation
+    learning_rate: 0.0005 # The learning rate, it can be a function
+    clip_range: 0.2 # Clipping parameter, it can be a function
+    max_grad_norm: 0.5
+    vf_coef: 0.5
+    cm_w: 0.1
+    target_kl: 0.01
+    policy_kwargs: { net_arch: { pi: [ 256, 256 ], vf: [ 256, 256 ] } }
+    model_steps: 64
+    model_grad_steps: 12
+    clip_likelihood: 5
+    vf_compl_coef: 1
+    model_buffer_size: 5000000
+    complexity_learning_rate: 0.4154504312999981
+    pre_train_steps: 50
+    delay_update: 100
+    norm_parameter: 1.0
+    unnormalize_model: False
+    model_kwargs: {lr: lin_0.001, model_arch: [64,64,64]}
+  environment:
+    n_envs: 6
+    name: highway-fast-v0
+    render_mode: rgb_array
+    normalize: False
+  wrappers:
+    - src.utils.wrappers.FlattenObservation
+
+roundabout-v0:
+  parameters:
+    n_steps: 512 # batch size is n_steps * n_env
+    batch_size: 128 # Number of training minibatches per update
+    gae_lambda: 0.95 #  Factor for trade-off of bias vs variance for Generalized Advantage Estimator
+    gamma: 0.8
+    n_epochs: 6 #  Number of epoch when optimizing the surrogate
+    ent_coef: 0.01 # Entropy coefficient for the loss caculation
+    learning_rate: 0.0005 # The learning rate, it can be a function
+    clip_range: 0.2 # Clipping parameter, it can be a function
+    max_grad_norm: 0.5
+    policy_kwargs: {net_arch: {pi: [256, 256], vf: [256, 256]}}#, features_extractor_kwargs: { normalized_image: True }}
+    vf_coef: 0.5
+    cm_w: 0.1
+    target_kl: 0.01
+    model_steps: 64
+    model_grad_steps: 12
+    clip_likelihood: 5
+    vf_compl_coef: 1
+    model_buffer_size: 50000
+    complexity_learning_rate: 0.4154504312999981
+    pre_train_steps: 0
+    delay_update: 100
+    norm_parameter: 1.0
+    unnormalize_model: False
+    model_kwargs: { lr: lin_0.001, model_arch: [ 64,64,64 ] }
+  environment:
+    n_envs: 6
+    name: roundabout-v0
+    render_mode: rgb_array
+    normalize: False
+    config: {
+      observation: {
+        type: "Kinematics",
+        vehicles_count: 5,
+        features: [ "presence", "x", "y", "vx", "vy", "cos_h", "sin_h" ],
+        absolute: False,
+      },
+      policy_frequency: 2,
+      simulation_frequency: 8,
+      duration: 20,
+    }
+  wrappers:
+    - src.utils.wrappers.FlattenObservation
+
+HalfCheetah-v4:
+  parameters:
+    n_steps: 512 # batch size is n_steps * n_env
+    batch_size: 64 # Number of training minibatches per update
+    gae_lambda: 0.92 #  Factor for trade-off of bias vs variance for Generalized Advantage Estimator
+    gamma: 0.98
+    n_epochs: 20 #  Number of epoch when optimizing the surrogate
+    ent_coef: 0.000401762 # Entropy coefficient for the loss caculation
+    learning_rate: 0.000020633 # The learning rate, it can be a function
+    clip_range: 0.1 # Clipping parameter, it can be a function
+    max_grad_norm: 0.8
+    policy_kwargs: { log_std_init: -2, ortho_init: False, activation_fn: nn.ReLU,
+                     net_arch: {pi: [256, 256], vf: [256, 256]} }
+    vf_coef: 0.58096
+    cm_w: 0.5
+    model_steps: 64
+    model_grad_steps: 12
+    clip_likelihood: 5
+    vf_compl_coef: 1
+    model_buffer_size: 50000
+    complexity_learning_rate: 0.4
+    pre_train_steps: 50
+    delay_update: 500
+    norm_parameter: 1.0
+    unnormalize_model: True
+    model_kwargs: { lr: lin_0.001, model_arch: [ 256,256,256 ] }
+  environment:
+    n_envs: 1
+    name: HalfCheetah-v4
+    render_mode: rgb_array
+    normalize: True
+
+
+Ant-v4:
+  parameters:
+    n_steps: 512 # batch size is n_steps * n_env
+    batch_size: 32 # Number of training minibatches per update
+    gae_lambda: 0.8 #  Factor for trade-off of bias vs variance for Generalized Advantage Estimator
+    gamma: 0.98
+    n_epochs: 10 #  Number of epoch when optimizing the surrogate
+    ent_coef: 4.9646e-07 # Entropy coefficient for the loss caculation
+    learning_rate: 0.000019069 # The learning rate, it can be a function
+    clip_range: 0.1 # Clipping parameter, it can be a function
+    max_grad_norm: 0.6
+    policy_kwargs: { log_std_init: -2, ortho_init: False, activation_fn: nn.ReLU,
+                     net_arch: {pi: [256, 256], vf: [256, 256]} }
+    vf_coef: 0.677239
+    cm_w: 0.5
+    model_steps: 64
+    model_grad_steps: 12
+    clip_likelihood: 5
+    vf_compl_coef: 1
+    model_buffer_size: 50000
+    complexity_learning_rate: 0.4154504312999981
+    pre_train_steps: 50
+    delay_update: 500
+    norm_parameter: 1.0
+    unnormalize_model: True
+    model_kwargs: { lr: lin_0.001, model_arch: [ 256,256,256 ] }
+  environment:
+    n_envs: 1
+    name: Ant-v4
+    render_mode: rgb_array
+    normalize: True
+
+Walker2d-v4:
+  parameters:
+    batch_size: 32
+    n_steps: 512
+    gamma: 0.99
+    learning_rate: 5.05041e-05
+    ent_coef: 0.000585045
+    clip_range: 0.1
+    n_epochs: 20
+    policy_kwargs: {}
+    gae_lambda: 0.95
+    max_grad_norm: 1
+    vf_coef: 0.871923
+    cm_w: 0.5
+    model_steps: 64
+    model_grad_steps: 12
+    clip_likelihood: 5
+    vf_compl_coef: 1
+    model_buffer_size: 50000
+    complexity_learning_rate: 0.4154504312999981
+    pre_train_steps: 50
+    delay_update: 500
+    norm_parameter: 1.0
+    unnormalize_model: True
+    model_kwargs: { lr: lin_0.001, model_arch: [ 128,128,128 ] }
+  environment:
+    n_envs: 1
+    name: Walker2d-v4
+    render_mode: rgb_array
+    normalize: True
