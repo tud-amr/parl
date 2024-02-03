@@ -18,6 +18,9 @@ The module follows the syntax of Stable Baselines3, with additional parameters r
 ### Hyperparameters
 The file parameters_parl.yml contains the tuned hyperparameters used in the paper.
 
+### Trained agents
+We provide the trained agents used for all results presented in the paper in [the following link](https://surfdrive.surf.nl/files/index.php/s/lFmrat9FpUbBrzR).
+
 ## Implementing new predictability-aware algorithms
 PARL is designed to be applicable to any on and off policy RL algorithm. The current version is based on PPO, but the base agent class in /src/agent/BaseAgents.py implements a general on-policy model based RL class, in principle adaptable to other on policy algorithms (with minimum modifications).
 
